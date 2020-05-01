@@ -1,6 +1,11 @@
 package q003;
 
+import q002.Q002;
+
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 
 /**
  * Q003 集計と並べ替え
@@ -26,6 +31,43 @@ ignorance=1
  * http://eikaiwa.dmm.com/blog/4690/
  */
 public class Q003 {
+    private static final String regex = "\\.|;|,";
+    // 実装部
+    public static void main(String[] args) throws IOException {
+
+        String streamData = convertInputStreamToString(openDataFile()).replaceAll(regex,"");
+        String[] listData = streamData.toLowerCase() .split(" ");
+        Arrays.sort(listData);
+
+        String str = "";
+        Integer num = 1;
+        for (String listDatum : listData) {
+            if(str.equals("")){
+                str = listDatum;
+            }
+            else if(str.equals(listDatum)){
+                num++;
+            }
+            else {
+                System.out.println(str + "=" + String.valueOf(num));
+                str = listDatum;
+                num=1;
+            }
+
+        }
+    }
+
+    static String convertInputStreamToString(InputStream is) throws IOException {
+        InputStreamReader reader = new InputStreamReader(is);
+        StringBuilder builder = new StringBuilder();
+        char[] buf = new char[1024];
+        int numRead;
+        while (0 <= (numRead = reader.read(buf))) {
+            builder.append(buf, 0, numRead);
+        }
+        return builder.toString();
+    }
+
     /**
      * データファイルを開く
      * resources/q003/data.txt
@@ -35,3 +77,4 @@ public class Q003 {
     }
 }
 // 完成までの時間: xx時間 xx分
+//17:07開始 18:31 中断、
