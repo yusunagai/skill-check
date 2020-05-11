@@ -1,11 +1,12 @@
 package q006;
 
-import q006.value.DecimalValue;
-import q006.value.IValue;
-import q006.value.PlusValue;
+import q006.value.*;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Q006 空気を読んで改修
@@ -29,6 +30,19 @@ import java.util.List;
  * （または -1.00 など、小数点に0がついてもよい）
  */
 public class Q006 {
+
+    //入力
+    private static final String input = "3 1.1 0.9 + 2.0 * -";
+    //入力値を計算処理に受け渡す
+    public static void main(String[] args) {
+        List<IValue> resultList = parseLine(input);
+        Stack result = new Stack();
+        for(int i=0; i< resultList.size();i++){
+            resultList.get(i).execute(result);
+        }
+        System.out.println(result.pop());
+    }
+
     /**
      * 逆ポーランドで記載された1行のテキストを分解する
      * @param lineText 1行テキスト
@@ -43,6 +57,15 @@ public class Q006 {
                 case "+":   // 足し算
                     resultList.add(new PlusValue());
                     break;
+                case "-":   // 引き算
+                    resultList.add(new MinusValue());
+                    break;
+                case "*":   // 乗算
+                    resultList.add(new MultipliedValue());
+                    break;
+                case "/":   // 割り算
+                    resultList.add(new DividedValue());
+                    break;
                 default:    // その他は数値として扱う
                     resultList.add(new DecimalValue(text));
                     break;
@@ -51,4 +74,7 @@ public class Q006 {
         return resultList;
     }
 }
-// 完成までの時間: xx時間 xx分
+// 完成までの時間: 1時間 14分
+// 16:00 17:14
+// 空気読んで各クラス実装するも、最後のメイン部分でどうすればいいのかで小一時間悩む。
+// 全体的に合間に他メンバーフォローや顧客対応を実施していたため、正確な時間ではないかも。。
