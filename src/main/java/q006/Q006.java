@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Stack;
 
 /**
@@ -31,10 +32,11 @@ import java.util.Stack;
  */
 public class Q006 {
 
-    //入力
-    private static final String input = "3 1.1 0.9 + 2.0 * -";
     //入力値を計算処理に受け渡す
     public static void main(String[] args) {
+        //標準入力から受け取る
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
         List<IValue> resultList = parseLine(input);
         Stack result = new Stack();
         for(int i=0; i< resultList.size();i++){
